@@ -9,10 +9,16 @@ import { Component, OnInit } from '@angular/core';
 export class PagesComponent implements OnInit {
 
   year = new Date().getFullYear();
+  public linkTheme = document.querySelector('#theme');
+
 
   constructor() { }
 
   ngOnInit(): void {
-  }
 
+    const url = localStorage.getItem('theme') || './assets/css/colors/megna-dark.css'
+  
+    this.linkTheme!.setAttribute('href', url);
+  
+  }
 }
