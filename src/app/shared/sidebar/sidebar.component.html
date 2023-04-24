@@ -43,7 +43,9 @@
           >
           <ul aria-expanded="false" class="collapse">
             <li *ngFor="let subMenuItems of item.submenu">
-              <a [routerLink]="subMenuItems.path">{{subMenuItems.title}}</a>
+              <a [routerLink]="subMenuItems.path"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }">{{subMenuItems.title}}</a>  <!--para ver que se quede resaltada solo la ruta exacta-->
             </li>
           </ul>
         </li>
