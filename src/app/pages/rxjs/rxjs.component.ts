@@ -10,12 +10,14 @@ import { map, retry, take, filter } from 'rxjs/operators';
 export class RxjsComponent implements OnDestroy{
 
   public intervalSubs: Subscription;
+  public numbersList: number[] = [];
 
   constructor() {
     
-    this.intervalSubs = this.retornaIntervalo()
-    .subscribe(console.log);
-  }
+    this.intervalSubs = this.retornaIntervalo().subscribe((value) => {
+      this.numbersList.push(value);
+  });
+}
   
   ngOnDestroy(): void {
     this.intervalSubs.unsubscribe();

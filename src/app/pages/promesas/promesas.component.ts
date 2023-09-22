@@ -7,13 +7,17 @@ import { resolve } from 'chart.js/dist/helpers/helpers.options';
   styleUrls: ['./promesas.component.scss']
 })
 export class PromesasComponent implements OnInit {
+  public usuarios: any[] = [];
+  public error: string = '';
 
   constructor() { }
 
   ngOnInit() {
 
-    this.getUsuarios().then( usuarios => {
-      console.log(usuarios)
+    this.getUsuarios().then((usuarios: any) => {
+      this.usuarios = usuarios;
+    }).catch((error) => {
+      this.error = error;
     });
 
     // const promesa = new Promise( ( resolve, reject ) => {
@@ -33,12 +37,20 @@ export class PromesasComponent implements OnInit {
     // console.log('Fin del Init');
   }
 
-  getUsuarios(){
-    return new Promise( resolve => {
-    
-    fetch('https://reqres.in/api/users')
-    .then( resp => resp.json() )
-    .then( body => console.log(body.data))
-  });
-}
+  getUsuarios() {
+    return new Promise((resolve, reject) => {
+      fetch('https://reqres.in/api/users')
+        .then(resp => resp.json())
+        .then(body => {
+          if (body.data) {
+            resolve(body.data);
+          } else {
+            reject('No se encontraron datos de usuarios');
+          }
+        })
+        .catch(error => {
+          reject('Hubo un error al obtener los usuarios');
+        });
+    });
+  }
 }
